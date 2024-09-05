@@ -1,5 +1,5 @@
-import axios from 'axios';
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -8,49 +8,55 @@ const Login = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleLogin = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.post('http://localhost:8000/api/login', { email, password })
+        axios.post('http://localhost:8000/api/login', {
+            email,
+            password
+        })
             .then(response => {
-                console.log('Login successful:', response.data);
-
-                const { token } = response.data;
-                localStorage.setItem('token', token);
-
-                navigate('/');
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('userId', response.data.user.id); // Assurez-vous que l'ID utilisateur est renvoyé
+                console.log('Connexion réussie:', response.data);
+                navigate('/'); // Redirection vers la page d'accueil après connexion
             })
             .catch(error => {
-                setError(error.response?.data?.message || 'An error occurred while logging in.');
-                console.error('Error logging in:', error.response?.data || error.message);
+                setError(error.response?.data?.message || 'Une erreur est survenue lors de la connexion.');
+                console.error('Erreur lors de la connexion:', error.response?.data || error.message);
             });
     };
 
     return (
-        <div className="container-register">
-            <div className="form-register">
-                <form onSubmit={handleLogin}>
-                    {error && <p style={{ color: 'red' }}>{error}</p>}
-                    <h1 className='title-register'>Connexion</h1>
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Email"
-                        required
-                        className="input input-bordered w-full bg-inherit"
+        <div>
+            <h1>Connexion</h1>
+            <form onSubmit={handleSubmit}>
+                <label className="input input-bordered flex items-center gap-2">
+                    <input 
+                        type="email" 
+                        className="grow" 
+                        placeholder="Email" 
+                        value={email} 
+                        onChange={(e) => setEmail(e.target.value)} 
+                        required 
                     />
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Password"
-                        required
-                        className="input input-bordered w-full bg-inherit"
+                </label>
+                <label className="input input-bordered flex items-center gap-2">
+                    <input 
+                        type="password" 
+                        className="grow" 
+                        placeholder="Mot de passe" 
+                        value={password} 
+                        onChange={(e) => setPassword(e.target.value)} 
+                        required 
                     />
-                    <button type="submit" className="btnForm mt-10 btn-register">Login</button>
-                </form>
-            </div>
+                </label>
+                <button type="submit" className="btn">Se connecter</button>
+                {error && <p className="text-red-500">{error}</p>}
+            </form>
+            <p className="mt-4">
+                Pas encore de compte? <a href="/register" className="text-blue-500">S'inscrire</a>
+            </p>
         </div>
     );
 };

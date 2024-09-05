@@ -1,37 +1,28 @@
-import React, { useEffect } from 'react';
-import { Route, BrowserRouter as Router, Routes, useNavigate } from 'react-router-dom';
+import React from 'react';
 import './style/App.css'
-import Footer from './components/Footer.jsx';
-import Home from './views/Home.jsx';
-import Login from './views/login.jsx';
-import Register from './views/Register.jsx';
-
-const AppRoutes = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      navigate('/register');
-    }
-  }, [navigate]);
-
-  return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-    </Routes>
-  );
-};
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Footer from "./components/Footer";
+import Home from './views/Home';
+import Login from './views/login';
+import Register from './views/Register';
+import CreateTransaction from './components/CreateTransaction';
+import Graph from "./components/Graph";
 
 function App() {
-  return (
-    <Router>
-      <AppRoutes />
-      <Footer />
-    </Router>
-  );
+    return (
+        <Router>
+          <Header />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/create-transaction" element={<CreateTransaction />} />
+                <Route path="/graph" element={<Graph />} />
+            </Routes>
+            <Footer />
+        </Router>
+    );
 }
 
 export default App;
