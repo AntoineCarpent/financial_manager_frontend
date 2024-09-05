@@ -1,9 +1,11 @@
 import React from 'react';
-import Liste from '../components/Liste.jsx';
+import Liste from '../components/Liste';
 
 const Home = () => {
     return (
-        <Liste />
+        <div>
+            <Liste />
+        </div>
     );
 };
 
