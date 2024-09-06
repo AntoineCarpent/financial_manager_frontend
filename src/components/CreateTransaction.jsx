@@ -41,47 +41,50 @@ const CreateTransaction = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="p-4 bg-gray-200 shadow-md rounded-md mx-auto mt-10 max-w-lg">
-            <div className="mb-4">
-                <input
-                    type="text"
-                    className="input bg-black text-white placeholder-white border-none w-full"
-                    placeholder="Nom"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                />
-            </div>
-            <div className="mb-4">
-                <input
-                    type="date"
-                    className="input bg-black text-white placeholder-white border-none w-full"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                    required
-                />
-            </div>
-            <div className="mb-4">
-                <input
-                    type="number"
-                    className="input bg-black text-white placeholder-white border-none w-full"
-                    placeholder="Revenus"
-                    value={deposit}
-                    onChange={(e) => setDeposit(e.target.value)}
-                />
-            </div>
-            <div className="mb-4">
-                <input
-                    type="number"
-                    className="input bg-black text-white placeholder-white border-none w-full"
-                    placeholder="Dépenses"
-                    value={expense}
-                    onChange={(e) => setExpense(e.target.value)}
-                />
-            </div>
-            {error && <p className="text-red-500">{error}</p>}
-            <button type="submit" className="btn bg-black text-white hover:bg-gray-800 w-full">Créer la transaction</button>
-        </form>
+        <div className="p-6 bg-gray-100 min-h-screen flex flex-col items-center">
+            <h1 className="text-2xl font-bold mb-6 text-black">Ajouter une transaction</h1>
+            <form onSubmit={handleSubmit} className="p-4 bg-gray-200 shadow-md rounded-md mx-auto mt-10 max-w-lg">
+                <div className="mb-4">
+                    <input
+                        type="text"
+                        className="input bg-gray-600 text-white placeholder-white border-none w-full"
+                        placeholder="Nom"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="mb-4">
+                    <input
+                        type="date"
+                        className="input bg-gray-600 text-white placeholder-white border-none w-full"
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="mb-4">
+                    <input
+                        type="number"
+                        className="input bg-gray-600 text-white placeholder-white border-none w-full"
+                        placeholder="Revenus"
+                        value={deposit}
+                        onChange={(e) => setDeposit(e.target.value)}
+                    />
+                </div>
+                <div className="mb-4">
+                    <input
+                        type="number"
+                        className="input bg-gray-600 text-white placeholder-white border-none w-full"
+                        placeholder="Dépenses"
+                        value={expense}
+                        onChange={(e) => setExpense(e.target.value)}
+                    />
+                </div>
+                {error && <p className="text-red-500">{error}</p>}
+                <button type="submit" className="btn bg-black text-white hover:bg-gray-800 w-full">Créer la transaction</button>
+            </form>
+        </div>
     );
 };
 
