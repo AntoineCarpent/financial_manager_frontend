@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom'; // Import Link for navigation
+import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'; // Updated imports
 
 const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -30,6 +32,22 @@ const Liste = () => {
         }
     }, []);
 
+    const handleDelete = (id) => {
+        const token = localStorage.getItem('token');
+        axios.delete(`http://localhost:8000/api/transactions/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then(response => {
+                setTransactions(transactions.filter(transaction => transaction.id !== id));
+                console.log('Transaction supprimée avec succès:', response.data);
+            })
+            .catch(error => {
+                console.error('Erreur lors de la suppression de la transaction:', error);
+            });
+    };
+
     const calculateTotals = () => {
         return transactions.reduce(
             (totals, transaction) => {
@@ -51,26 +69,37 @@ const Liste = () => {
                 <table className="table w-full border border-black rounded-lg">
                     <thead>
                         <tr className="bg-gray-200 text-black">
-                            <th className="border-b border-black py-2">Nom</th>
-                            <th className="border-b border-black py-2">Date</th>
-                            <th className="border-b border-black py-2 text-green-500">Revenus</th>
-                            <th className="border-b border-black py-2 text-red-500">Dépenses</th>
+                            <th className="border-b border-black py-2 text-left">Nom</th>
+                            <th className="border-b border-black py-2 text-left">Date</th>
+                            <th className="border-b border-black py-2 text-right text-green-500">Revenus</th>
+                            <th className="border-b border-black py-2 text-right text-red-500">Dépenses</th>
+                            <th className="border-b border-black py-2 text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {transactions.map((transaction, index) => (
-                            <tr key={index} className="border-b border-black">
-                                <td className="py-2">{transaction.name}</td>
-                                <td className="py-2">{formatDate(transaction.date)}</td>
-                                <td className="py-2 text-green-500">{transaction.deposit} €</td>
-                                <td className="py-2 text-red-500">{transaction.expense} €</td>
+                        {transactions.map((transaction) => (
+                            <tr key={transaction.id} className="border-b border-black">
+                                <td className="py-2 text-left">{transaction.name}</td>
+                                <td className="py-2 text-left">{formatDate(transaction.date)}</td>
+                                <td className="py-2 text-right text-green-500">{transaction.deposit} €</td>
+                                <td className="py-2 text-right text-red-500">{transaction.expense} €</td>
+                                <td className="py-2 text-center">
+                                    <Link to={`/edit-transaction/${transaction.id}`}>
+                                        <PencilSquareIcon className="h-6 w-6 text-blue-500 inline-block mr-2 cursor-pointer" />
+                                    </Link>
+                                    <TrashIcon
+                                        className="h-6 w-6 text-red-500 inline-block cursor-pointer"
+                                        onClick={() => handleDelete(transaction.id)}
+                                    />
+                                </td>
                             </tr>
                         ))}
                     </tbody>
                     <tfoot>
-                        <tr className="bg-gray-200  text-black">
-                            <td colSpan="3" className="py-2 font-bold">Total</td>
-                            <td className="py-2 text-blue-500 font-bold">{netTotal} €</td>
+                        <tr className="bg-gray-200 text-black">
+                            <td colSpan="3" className="py-2 font-bold text-right">Total</td>
+                            <td className="py-2 text-blue-500 font-bold text-right">{netTotal} €</td>
+                            <td className="py-2" />
                         </tr>
                     </tfoot>
                 </table>

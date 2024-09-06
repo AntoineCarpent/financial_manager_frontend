@@ -8,6 +8,7 @@ import Login from './views/login';
 import Register from './views/Register';
 import CreateTransaction from './components/CreateTransaction';
 import Graph from "./components/Graph";
+import EditeTransaction from "./components/EditTransection";
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/create-transaction" element={<CreateTransaction />} />
                 <Route path="/graph" element={<Graph />} />
+                <Route path="/edit-transaction/:id" element={<EditeTransaction />} />
             </Routes>
             <Footer />
         </Router>
