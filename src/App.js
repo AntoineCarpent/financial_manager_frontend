@@ -1,26 +1,56 @@
+// src/App.js
 import React from 'react';
-import './style/App.css'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import CreateTransaction from './components/CreateTransaction';
+import EditTransaction from './components/EditTransaction';
+import Footer from './components/Footer';
+import Graph from './components/Graph';
 import Header from './components/Header';
-import Footer from "./components/Footer";
+import ProtectedRoute from './components/ProtectedRoute';
+import './style/App.css';
 import Home from './views/Home';
 import Login from './views/login';
 import Register from './views/Register';
-import CreateTransaction from './components/CreateTransaction';
-import Graph from "./components/Graph";
-import EditeTransaction from "./components/EditTransection";
 
 function App() {
     return (
         <Router>
-          <Header />
+            <Header />
             <Routes>
-                <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/create-transaction" element={<CreateTransaction />} />
-                <Route path="/graph" element={<Graph />} />
-                <Route path="/edit-transaction/:id" element={<EditeTransaction />} />
+                <Route
+                    path="/"
+                    element={
+                        <ProtectedRoute>
+                            <Home />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/create-transaction"
+                    element={
+                        <ProtectedRoute>
+                            <CreateTransaction />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/graph"
+                    element={
+                        <ProtectedRoute>
+                            <Graph />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/edit-transaction/:id"
+                    element={
+                        <ProtectedRoute>
+                            <EditTransaction />
+                        </ProtectedRoute>
+                    }
+                />
             </Routes>
             <Footer />
         </Router>

@@ -1,7 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
+    const navigate = useNavigate(); // Utilisation du hook useNavigate
+
+    const handleLogout = () => {
+        localStorage.removeItem('token'); // Supprime le token de stockage local
+        localStorage.removeItem('userId'); // Supprime aussi l'ID utilisateur si stocké
+        navigate('/login'); // Redirige vers la page de login
+    };
+
     return (
         <div className="navbar bg-[#f5f5f5] text-black border-b border-gray-300">
             <div className="navbar-start">
@@ -24,7 +32,7 @@ const Header = () => {
                         tabIndex={0}
                         className="menu menu-sm dropdown-content bg-[#f5f5f5] text-black rounded-box z-[1] mt-3 w-52 p-2 shadow">
                         <li><Link to="/">Acceuil</Link></li>
-                        <li><Link to="/create">Ajouter une transaction</Link></li>
+                        <li><Link to="/create-transaction">Ajouter une transaction</Link></li>
                         <li><Link to="/graph">Graphique</Link></li>
                     </ul>
                 </div>
@@ -38,11 +46,12 @@ const Header = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <button className="btn text-white mr-5" onClick={() => {
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('userId');
-                    window.location.href = '/login';
-                }}>Logout</button>
+                <button
+                    className="btn text-white mr-5"
+                    onClick={handleLogout}
+                >
+                    Déconnexion
+                </button>
             </div>
         </div>
     );
