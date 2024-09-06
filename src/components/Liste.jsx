@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom'; // Import Link for navigation
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'; // Updated imports
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'; // Import Link for navigation
 
 const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -23,15 +23,15 @@ const Liste = () => {
                 },
             })
                 .then(response => {
+                    console.log('Transactions récupérées:', response.data);
                     const sortedTransactions = response.data.sort((a, b) => new Date(a.date) - new Date(b.date));
                     setTransactions(sortedTransactions);
                 })
                 .catch(error => {
-                    console.error('Erreur lors de la récupération des transactions:', error);
+                    console.error('Erreur lors de la récupération des transactions:', error.response ? error.response.data : error.message);
                 });
         }
     }, []);
-
     const handleDelete = (id) => {
         const token = localStorage.getItem('token');
         axios.delete(`http://localhost:8000/api/transactions/${id}`, {
@@ -81,8 +81,12 @@ const Liste = () => {
                             <tr key={transaction.id} className="border-b border-black">
                                 <td className="py-2 text-left">{transaction.name}</td>
                                 <td className="py-2 text-left">{formatDate(transaction.date)}</td>
-                                <td className="py-2 text-right text-green-500">{transaction.deposit} €</td>
-                                <td className="py-2 text-right text-red-500">{transaction.expense} €</td>
+                                <td className="py-2 text-right text-green-500">
+                                    {transaction.deposit && parseFloat(transaction.deposit) !== 0 ? `${transaction.deposit} €` : ''}
+                                </td>
+                                <td className="py-2 text-right text-red-500">
+                                    {transaction.expense && parseFloat(transaction.expense) !== 0 ? `${transaction.expense} €` : ''}
+                                </td>
                                 <td className="py-2 text-center">
                                     <Link to={`/edit-transaction/${transaction.id}`}>
                                         <PencilSquareIcon className="h-6 w-6 text-blue-500 inline-block mr-2 cursor-pointer" />

@@ -21,25 +21,27 @@ const EditTransaction = () => {
             })
                 .then(response => {
                     const transaction = response.data;
-                    setName(transaction.name);
-                    setDate(transaction.date);
+                    console.log('Transaction récupérée:', transaction);
+                    setName(transaction.name || '');
+                    setDate(transaction.date || '');
                     setDeposit(transaction.deposit || '');
                     setExpense(transaction.expense || '');
                 })
                 .catch(error => {
                     console.error('Erreur lors de la récupération de la transaction:', error);
+                    setError('Erreur lors de la récupération des données.');
                 });
         }
     }, [id]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+    
         const token = localStorage.getItem('token');
-
+    
         const depositValue = deposit ? parseFloat(deposit) : 0;
         const expenseValue = expense ? parseFloat(expense) : 0;
-
+    
         axios.put(`http://localhost:8000/api/transactions/${id}`, {
             name,
             date,
@@ -68,6 +70,7 @@ const EditTransaction = () => {
                     type="text"
                     className="input bg-black text-white placeholder-white border-none w-full"
                     placeholder="Nom"
+                    value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
                 />
@@ -76,6 +79,7 @@ const EditTransaction = () => {
                 <input
                     type="date"
                     className="input bg-black text-white placeholder-white border-none w-full"
+                    value={date}
                     onChange={(e) => setDate(e.target.value)}
                     required
                 />
