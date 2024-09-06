@@ -47,31 +47,30 @@ const Liste = () => {
     return (
         <div className="p-6 bg-white text-black">
             <h1 className="text-center text-2xl font-bold uppercase mb-4 border-b-2 border-black pb-2">Liste des Transactions</h1>
-            <div className="overflow-x-auto">
-                <table className="table w-3/4 mx-auto border border-black">
-                    {/* head */}
+            <div className="overflow-x-auto w-3/4 mx-auto bg-off-white p-6 rounded-lg shadow-md">
+                <table className="table w-full border border-black rounded-lg">
                     <thead>
-                        <tr>
-                            <th className="border-b border-black">Nom</th>
-                            <th className="border-b border-black">Date</th>
-                            <th className="border-b border-black text-green-500">Revenus</th>
-                            <th className="border-b border-black text-red-500">Dépenses</th>
+                        <tr className="bg-gray-200 text-black">
+                            <th className="border-b border-black py-2">Nom</th>
+                            <th className="border-b border-black py-2">Date</th>
+                            <th className="border-b border-black py-2 text-green-500">Revenus</th>
+                            <th className="border-b border-black py-2 text-red-500">Dépenses</th>
                         </tr>
                     </thead>
                     <tbody>
                         {transactions.map((transaction, index) => (
                             <tr key={index} className="border-b border-black">
-                                <td>{transaction.name}</td>
-                                <td>{formatDate(transaction.date)}</td>
-                                <td className="text-green-500">{transaction.deposit} €</td>
-                                <td className="text-red-500">{transaction.expense} €</td>
+                                <td className="py-2">{transaction.name}</td>
+                                <td className="py-2">{formatDate(transaction.date)}</td>
+                                <td className="py-2 text-green-500">{transaction.deposit} €</td>
+                                <td className="py-2 text-red-500">{transaction.expense} €</td>
                             </tr>
                         ))}
                     </tbody>
                     <tfoot>
-                        <tr className="bg-gray-200">
-                            <td colSpan="3" className="text-white">Total</td>
-                            <td className="text-blue-500">{netTotal} €</td>
+                        <tr className="bg-gray-200  text-black">
+                            <td colSpan="3" className="py-2 font-bold">Total</td>
+                            <td className="py-2 text-blue-500 font-bold">{netTotal} €</td>
                         </tr>
                     </tfoot>
                 </table>
