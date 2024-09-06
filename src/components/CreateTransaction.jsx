@@ -32,7 +32,7 @@ const CreateTransaction = () => {
         })
             .then(response => {
                 console.log('Transaction créée avec succès:', response.data);
-                navigate('/'); // Redirection après succès
+                navigate('/');
             })
             .catch(error => {
                 setError(error.response?.data?.message || 'Une erreur est survenue lors de la création de la transaction.');
@@ -41,12 +41,11 @@ const CreateTransaction = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="p-4 bg-white shadow-md rounded-md">
+        <form onSubmit={handleSubmit} className="p-4 bg-gray-200 shadow-md rounded-md mx-auto mt-10 max-w-lg">
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Nom</label>
                 <input
                     type="text"
-                    className="input input-bordered w-full"
+                    className="input bg-black text-white placeholder-white border-none w-full"
                     placeholder="Nom"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -54,37 +53,34 @@ const CreateTransaction = () => {
                 />
             </div>
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Date</label>
                 <input
                     type="date"
-                    className="input input-bordered w-full"
+                    className="input bg-black text-white placeholder-white border-none w-full"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
                     required
                 />
             </div>
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Revenus</label>
                 <input
                     type="number"
-                    className="input input-bordered w-full"
+                    className="input bg-black text-white placeholder-white border-none w-full"
                     placeholder="Revenus"
                     value={deposit}
                     onChange={(e) => setDeposit(e.target.value)}
                 />
             </div>
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Dépenses</label>
                 <input
                     type="number"
-                    className="input input-bordered w-full"
+                    className="input bg-black text-white placeholder-white border-none w-full"
                     placeholder="Dépenses"
                     value={expense}
                     onChange={(e) => setExpense(e.target.value)}
                 />
             </div>
             {error && <p className="text-red-500">{error}</p>}
-            <button type="submit" className="btn btn-primary w-full">Créer la transaction</button>
+            <button type="submit" className="btn bg-black text-white hover:bg-gray-800 w-full">Créer la transaction</button>
         </form>
     );
 };

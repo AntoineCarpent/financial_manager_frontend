@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import axios from 'axios';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -17,9 +17,9 @@ const Login = () => {
         })
             .then(response => {
                 localStorage.setItem('token', response.data.token);
-                localStorage.setItem('userId', response.data.user.id); // Assurez-vous que l'ID utilisateur est renvoyé
+                localStorage.setItem('userId', response.data.user.id);
                 console.log('Connexion réussie:', response.data);
-                navigate('/'); // Redirection vers la page d'accueil après connexion
+                navigate('/');
             })
             .catch(error => {
                 setError(error.response?.data?.message || 'Une erreur est survenue lors de la connexion.');
@@ -28,35 +28,37 @@ const Login = () => {
     };
 
     return (
-        <div>
-            <h1>Connexion</h1>
-            <form onSubmit={handleSubmit}>
-                <label className="input input-bordered flex items-center gap-2">
-                    <input 
-                        type="email" 
-                        className="grow" 
-                        placeholder="Email" 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)} 
-                        required 
-                    />
-                </label>
-                <label className="input input-bordered flex items-center gap-2">
-                    <input 
-                        type="password" 
-                        className="grow" 
-                        placeholder="Mot de passe" 
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)} 
-                        required 
-                    />
-                </label>
-                <button type="submit" className="btn">Se connecter</button>
-                {error && <p className="text-red-500">{error}</p>}
-            </form>
-            <p className="mt-4">
-                Pas encore de compte? <a href="/register" className="text-blue-500">S'inscrire</a>
-            </p>
+        <div className="flex items-center justify-center min-h-[70vh] bg-white text-black">
+            <div className="w-full max-w-md md:w-2/5 p-8 bg-white rounded-lg shadow-lg">
+                <h1 className="text-2xl font-bold text-center mb-6">Connexion</h1>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <label className="input input-bordered flex items-center gap-2">
+                        <input
+                            type="email"
+                            className="grow bg-transparent text-white placeholder-white p-2 outline-none"
+                            placeholder="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <label className="input input-bordered flex items-center gap-2">
+                        <input
+                            type="password"
+                            className="grow bg-transparent text-white placeholder-white p-2 outline-none"
+                            placeholder="Mot de passe"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <button type="submit" className="btn w-full">Se connecter</button>
+                    {error && <p className="text-red-500 text-center">{error}</p>}
+                </form>
+                <p className="mt-4 text-center">
+                    Pas encore de compte? <a href="/register" className="text-blue-500">S'inscrire</a>
+                </p>
+            </div>
         </div>
     );
 };
