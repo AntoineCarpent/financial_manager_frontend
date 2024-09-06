@@ -25,6 +25,7 @@ const Header = () => {
                         className="menu menu-sm dropdown-content bg-[#f5f5f5] text-black rounded-box z-[1] mt-3 w-52 p-2 shadow">
                         <li><Link to="/">Acceuil</Link></li>
                         <li><Link to="/create">Ajouter une transaction</Link></li>
+                        <li><Link to="/graph">Graphique</Link></li>
                     </ul>
                 </div>
                 <Link to="/" className="btn btn-ghost text-xl text-black">Soldout</Link>
@@ -33,10 +34,11 @@ const Header = () => {
                 <ul className="menu menu-horizontal px-1 text-black">
                     <li><Link to="/">Acceuil</Link></li>
                     <li><Link to="/create-transaction">Ajouter une transaction</Link></li>
+                    <li><Link to="/graph">Graphique</Link></li>
                 </ul>
             </div>
             <div className="navbar-end">
-                <button className="btn text-white" onClick={() => {
+                <button className="btn text-white mr-5" onClick={() => {
                     localStorage.removeItem('token');
                     localStorage.removeItem('userId');
                     window.location.href = '/login';
